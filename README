@@ -1,0 +1,14 @@
+Devise - Yubikey Database Authentication
+==============================
+
+This extension to Devise adds a modified Database Authentication strategy to allow the authentication of a user with Two Factor Authentication provided by the Yubikey OTP token
+
+This extension requires the used to already have a valid account and password and verifies that the user exists along with the password provided by verifying that the user presented a valid Yubikey OTP.
+
+Example
+=======
+
+Example goes here.
+
+
+Copyright (c) 2011 Stephen Kapp, Released under MIT License
