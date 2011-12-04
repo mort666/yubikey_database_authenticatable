@@ -12,6 +12,7 @@ module Devise
               fail('Yubikey OTP Required for this user.') 
             else
               if resource.validate_yubikey(params[:user][:yubiotp]) && (resource.registeredyubikey == params[:user][:yubiotp][0..11])
+                resource.after_database_authentication
                 success!(resource)
               else
                 fail('Invalid Yubikey OTP.')
