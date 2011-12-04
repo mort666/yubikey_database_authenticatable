@@ -1,22 +1,6 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "yubiket_database_authenticatable"
-    gem.summary = %Q{YubiKey OTP Authentication Plugin for Devise}
-    gem.description = %Q{Extended version of the Devise Database Authentication module to implement YubiKey OTP two factor authentication for registered users}
-    gem.email = "mort666@virus.org"
-    gem.homepage = "https://github.com/mort666/yubikey_database_authenticatable"
-    gem.authors = ["Stephen Kapp"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
-end
+require 'rdoc/task'
 
 desc 'Default: run unit tests.'
 task :default => :test
