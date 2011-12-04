@@ -6,15 +6,13 @@ This extension requires the used to already have a valid account and password an
 
 ## Installation
 
-This plugin requires Rails 3.0.x+ and Devise 1.3.4+. Additionally the Yubikey Ruby library found here is required.
+This plugin requires Rails 3.0.x and 3.1.x and Devise 1.3.4+. Additionally the Yubikey Ruby library found here is required.
 
 <https://github.com/titanous/yubikey>
 
-The gem for the Yubikey library will need to be added to your Gemfile. Currently this can only be installed as a plugin.
+The gem for the Yubikey library will need to be added to your Gemfile. To install the plugin add this plugin to your Gemfile.
 
-`rails plugin install git://github.com/mort666/yubikey_database_authenticatable.git`
-	
-Is compatible with Rails 3.1.
+	gem 'yubikey_database_authenticatable'
 
 ## Setup
 

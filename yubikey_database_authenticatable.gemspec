@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.version  = YubikeyDatabaseAuthenticatable::VERSION.dup
   s.platform = Gem::Platform::RUBY
   s.summary  = 'YubiKey OTP Authentication Plugin for Devise'
+  s.description = 'Extended version of the Devise Database Authentication module to implement YubiKey OTP two factor authentication for registered users'
   s.email = 'mort666@virus.org'
   s.homepage = 'https://github.com/mort666/yubikey_database_authenticatable'
   s.description = s.summary
