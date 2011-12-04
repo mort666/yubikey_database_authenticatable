@@ -21,4 +21,6 @@ Gem::Specification.new do |s|
   s.add_dependency('devise', '~> 1.5.0')
   s.add_dependency('yubikey', '~> 1.2.1')
   s.add_development_dependency "active_support"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rdoc"
 end
