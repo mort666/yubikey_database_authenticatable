@@ -5,13 +5,13 @@ module Devise
     class YubikeyDatabaseAuthenticatable < Authenticatable
       def authenticate!
         resource = valid_password? && mapping.to.find_for_yubikey_database_authentication(authentication_hash)
-    
-        if validate(resource) {resource.valid_password?(password)}
-          if resource.useyubikey == true
+
+        if validate(resource) { resource.valid_password?(password) }
+          if resource.use_yubikey == true
             if params[:user][:yubiotp].blank?
-              fail('Yubikey OTP Required for this user.') 
+              fail('Yubikey OTP Required for this user.')
             else
-              if resource.validate_yubikey(params[:user][:yubiotp]) && (resource.registeredyubikey == params[:user][:yubiotp][0..11])
+              if resource.validate_yubikey(params[:user][:yubiotp]) && (resource.registered_yubikey == params[:user][:yubiotp][0..11])
                 resource.after_database_authentication
                 success!(resource)
               else
@@ -29,4 +29,4 @@ module Devise
   end
 end
 
-  Warden::Strategies.add(:yubikey_database_authenticatable, Devise::Strategies::YubikeyDatabaseAuthenticatable)
+Warden::Strategies.add(:yubikey_database_authenticatable, Devise::Strategies::YubikeyDatabaseAuthenticatable)
