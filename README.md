@@ -20,8 +20,8 @@ Once the plugin is installed, all you need to do is setup the user model which i
 
 The following needs to be added to the User module.
 
-	add_column :users, :useyubikey, :boolean
-	add_column :users, :registeredyubikey, :string
+	add_column :users, :use_yubikey, :boolean
+	add_column :users, :registered_yubikey, :string
 
 then finally add to the model:
 
@@ -30,12 +30,12 @@ then finally add to the model:
       devise :yubikey_database_authenticatable, :trackable, :timeoutable
 
       # Setup accessible (or protected) attributes for your model
-      attr_accessible :useyubikey, :registeredyubikey, :yubiotp
+      attr_accessible :use_yubikey, :registered_yubikey, :yubiotp
 
 	  attr_accessor :yubiotp
 		
-	  def registeredyubikey=(yubiotp)
-	    write_attribute(:registeredyubikey, yubiotp[0..11])
+	  def registered_yubikey=(yubiotp)
+	    write_attribute(:registered_yubikey, yubiotp[0..11])
 	  end
 	
       ...

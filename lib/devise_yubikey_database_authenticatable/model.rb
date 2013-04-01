@@ -13,7 +13,7 @@ require 'bcrypt'
         
         def validate_yubikey(yubiotp)
           begin
-            otp = Yubikey::OTP::Verify.new(yubiotp)
+            otp = Yubikey::OTP::Verify.new(:otp => yubiotp)
           
             if otp.valid?
               return true
