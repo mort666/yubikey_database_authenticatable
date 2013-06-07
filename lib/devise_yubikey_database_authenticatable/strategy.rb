@@ -4,7 +4,7 @@ module Devise
   module Strategies
     class YubikeyDatabaseAuthenticatable < Authenticatable
       def authenticate!
-        resource = valid_password? && mapping.to.find_for_database_authentication(authentication_hash)
+        resource = valid_password? && mapping.to.find_for_yubikey_database_authentication(authentication_hash)
         return fail(:not_found_in_database) unless resource
 
         if validate(resource) { resource.valid_password?(password) }
