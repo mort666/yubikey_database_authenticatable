@@ -13,7 +13,7 @@ require 'bcrypt'
         
         def validate_yubikey(yubiotp)
           begin
-            otp = Yubikey::OTP::Verify.new(:otp => yubiotp, :api_id => self.class.yubikey_api_id, :api_key => self.class.yubikey_api_key)
+            otp = Yubikey::OTP::Verify.new(:otp => yubiotp, :api_id => Devise.yubikey_api_id, :api_key => Devise.yubikey_api_key)
           
             if otp.valid?
               return true
