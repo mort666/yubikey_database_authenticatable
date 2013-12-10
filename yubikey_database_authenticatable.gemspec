@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency('devise', '~> 2.2.3')
+  s.add_dependency('devise', '>= 2.2.3')
   s.add_dependency('yubikey', '~> 1.3.1')
   s.add_development_dependency "active_support"
   s.add_development_dependency "rake"
