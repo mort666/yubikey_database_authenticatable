@@ -6,9 +6,11 @@ This extension requires the used to already have a valid account and password an
 
 ## Installation
 
-This plugin requires Rails 3.0.x and 3.1.x and Devise 1.3.4+. Additionally the Yubikey Ruby library found here is required.
+This plugin requires Rails 3.0.x, 3.1.x and 3.2.x and Devise 2.2.3+. Additionally the Yubikey Ruby library found here is required.
 
 <https://github.com/titanous/yubikey>
+                                                 
+The latest git version has a fix for a MITM attack element when communicating with the Yubico servers, this doesn't appear to be reflected in the published gem.
 
 The gem for the Yubikey library will need to be added to your Gemfile. To install the plugin add this plugin to your Gemfile.
 
@@ -17,6 +19,13 @@ The gem for the Yubikey library will need to be added to your Gemfile. To instal
 ## Setup
 
 Once the plugin is installed, all you need to do is setup the user model which includes a small addition to the model itself and to the schema.
+
+In order to communicate with the Yubikey authentication services the API key will need to be provided, this should be included into the Devise config, set yubikey_api_key and yubikey_api_id in the Devise configuration file (in config/initializers/devise.rb).
+
+Get a key here: <https://upgrade.yubico.com/getapikey/>
+
+	config.yubikey_api_key = "" # => API Key must be set to validate one time passwords
+	config.yubikey_api_id = ""  # => API ID must be set to validate one time passwords
 
 The following needs to be added to the User module.
 
