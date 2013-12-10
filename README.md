@@ -1,4 +1,6 @@
 # Devise - Yubikey Database Authentication
+   
+[![Build Status](https://travis-ci.org/mort666/yubikey_database_authenticatable.png?branch=master)](https://travis-ci.org/mort666/yubikey_database_authenticatable)
 
 This extension to Devise adds a modified Database Authentication strategy to allow the authentication of a user with Two Factor Authentication provided by the Yubikey OTP token
 
@@ -52,4 +54,6 @@ then finally add to the model:
 
 ## Copyright
 
-Copyright (c) 2011 Stephen Kapp, Released under MIT License
+Copyright (c) 2011-2013 Stephen Kapp, Released under MIT License 
+
+Some bits borrowed from moneytree fork of original gem.
