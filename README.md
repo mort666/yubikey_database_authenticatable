@@ -1,6 +1,8 @@
 # Devise - Yubikey Database Authentication
    
-[![Build Status](https://travis-ci.org/mort666/yubikey_database_authenticatable.png?branch=master)](https://travis-ci.org/mort666/yubikey_database_authenticatable)
+## Why forked?
+
+I needed to add a two step login process. First the user logs in with their legacy username/password. Then, after authenticating the user the old way, I check if the `use_yubikey` field is true and respond with a form asking for the Yubikey OTP. That's it. Thought it was a better workflow for integrating Yubi slowly for everybody - users that don't have a yubkikey won't see the new field on the login form and the ones that get switched over will see the new form after the normal login process.
 
 This extension to Devise adds a modified Database Authentication strategy to allow the authentication of a user with Two Factor Authentication provided by the Yubikey OTP token
 
