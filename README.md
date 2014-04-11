@@ -4,6 +4,8 @@
 
 I needed to add a two step login process. First the user logs in with their legacy username/password. Then, after authenticating the user the old way, I check if the `use_yubikey` field is true and respond with a form asking for the Yubikey OTP. That's it. Thought it was a better workflow for integrating Yubi slowly for everybody - users that don't have a yubkikey won't see the new field on the login form and the ones that get switched over will see the new form after the normal login process.
 
+## Readme continued...
+
 This extension to Devise adds a modified Database Authentication strategy to allow the authentication of a user with Two Factor Authentication provided by the Yubikey OTP token
 
 This extension requires the used to already have a valid account and password and verifies that the user exists along with the password provided by verifying that the user presented a valid Yubikey OTP.
