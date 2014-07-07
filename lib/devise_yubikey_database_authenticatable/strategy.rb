@@ -8,7 +8,7 @@ module Devise
         return fail(:not_found_in_database) unless resource
 
         if validate(resource) { resource.valid_password?(password) }
-          if resource.use_yubikey == true
+          if resource.use_yubikey?
             if params[scope][:yubiotp].blank?
               fail('Yubikey OTP Required for this user.')
             else
