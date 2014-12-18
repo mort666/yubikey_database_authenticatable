@@ -12,7 +12,7 @@ This extension requires the used to already have a valid account and password an
 
 ## Installation
 
-This plugin requires Rails 3.0.x, 3.1.x and 3.2.x and Devise 2.2.3+. Additionally the Yubikey Ruby library found here is required.
+This plugin requires Rails 4.x, 3.0.x, 3.1.x and 3.2.x and Devise 2.2.3+. Additionally the Yubikey Ruby library found here is required.
 
 <https://github.com/titanous/yubikey>
                                                  
@@ -44,7 +44,7 @@ then finally add to the model:
 
       devise :yubikey_database_authenticatable, :trackable, :timeoutable
 
-      # Setup accessible (or protected) attributes for your model
+      # Setup accessible (or protected) attributes for your model if using rails 3 or lower
       attr_accessible :use_yubikey, :registered_yubikey, :yubiotp
 
 	  attr_accessor :yubiotp
@@ -55,6 +55,17 @@ then finally add to the model:
 	
       ...
 	end
+
+If using rails 4, the params are controlled by strong params and need to be updated in your application_controller.rb. The following settings reflect a devise config allowing username or email and password or yubikey
+
+  before_filter :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation) }
+      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :email, :password, :login, :use_yubikey, :registered_yubikey, :yubiotp) }
+      devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
+    end
 
 ## Copyright
 
