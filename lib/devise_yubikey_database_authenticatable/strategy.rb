@@ -10,7 +10,11 @@ module Devise
         if validate(resource) 
           if resource.use_yubikey?
             if params[scope][:yubiotp].blank?
-              resource.valid_password?(password) 
+              if resource.valid_password?(password) 
+                success!(resource)
+              else
+                fail(:invalid)
+              end
             else
               if resource.validate_yubikey(params[scope][:yubiotp]) && (resource.registered_yubikey == params[scope][:yubiotp][0..11])
                 resource.after_database_authentication
@@ -19,8 +23,10 @@ module Devise
                 fail('Invalid Yubikey OTP.')
               end
             end
-          else
+          elsif resource.valid_password?(password)
             success!(resource)
+          else
+            fail(:invalid)
           end
         else
           fail(:invalid)
