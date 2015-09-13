@@ -1,14 +1,6 @@
 # Devise - Yubikey Database Authentication
    
-## Why I Forked?
-
-I needed to get yubikey-database working with device and rails 4 and found the fork from DiegoSalazar was the best place to start. From there I just changed the strategy to handle password or yubikey and it seems to work fine.
-
-## Why forked? (from https://github.com/DiegoSalazar/yubikey_database_authenticatable)
-
-I needed to add a two step login process. First the user logs in with their legacy username/password. Then, after authenticating the user the old way, I check if the `use_yubikey` field is true and respond with a form asking for the Yubikey OTP. That's it. Thought it was a better workflow for integrating Yubi slowly for everybody - users that don't have a yubkikey won't see the new field on the login form and the ones that get switched over will see the new form after the normal login process.
-
-## Readme continued...
+[![Build Status](https://travis-ci.org/mort666/yubikey_database_authenticatable.png?branch=master)](https://travis-ci.org/mort666/yubikey_database_authenticatable)
 
 This extension to Devise adds a modified Database Authentication strategy to allow the authentication of a user with Two Factor Authentication provided by the Yubikey OTP token
 
@@ -18,7 +10,7 @@ This extension requires the used to already have a valid account and password an
 
 This plugin requires Rails 4.x, 3.0.x, 3.1.x and 3.2.x and Devise 2.2.3+. Additionally the Yubikey Ruby library found here is required.
 
-<https://github.com/titanous/yubikey>
+[https://github.com/titanous/yubikey](https://github.com/titanous/yubikey)
                                                  
 The latest git version has a fix for a MITM attack element when communicating with the Yubico servers, this doesn't appear to be reflected in the published gem.
 
@@ -32,7 +24,7 @@ Once the plugin is installed, all you need to do is setup the user model which i
 
 In order to communicate with the Yubikey authentication services the API key will need to be provided, this should be included into the Devise config, set yubikey_api_key and yubikey_api_id in the Devise configuration file (in config/initializers/devise.rb).
 
-Get a key here: <https://upgrade.yubico.com/getapikey/>
+Get a key here: [https://upgrade.yubico.com/getapikey/](https://upgrade.yubico.com/getapikey/)
 
 	config.yubikey_api_key = "" # => API Key must be set to validate one time passwords
 	config.yubikey_api_id = ""  # => API ID must be set to validate one time passwords
@@ -73,6 +65,6 @@ If using rails 4, the params are controlled by strong params and need to be upda
 	
 ## Copyright
 
-Copyright (c) 2011-2013 Stephen Kapp, Released under MIT License 
+Copyright (c) 2011-2015 Stephen Kapp, Released under MIT License 
 
 Some bits borrowed from moneytree fork of original gem.
