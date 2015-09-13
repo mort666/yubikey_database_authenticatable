@@ -1,6 +1,14 @@
 # Devise - Yubikey Database Authentication
    
-[![Build Status](https://travis-ci.org/mort666/yubikey_database_authenticatable.png?branch=master)](https://travis-ci.org/mort666/yubikey_database_authenticatable)
+## Why I Forked?
+
+I needed to get yubikey-database working with device and rails 4 and found the fork from DiegoSalazar was the best place to start. From there I just changed the strategy to handle password or yubikey and it seems to work fine.
+
+## Why forked? (from https://github.com/DiegoSalazar/yubikey_database_authenticatable)
+
+I needed to add a two step login process. First the user logs in with their legacy username/password. Then, after authenticating the user the old way, I check if the `use_yubikey` field is true and respond with a form asking for the Yubikey OTP. That's it. Thought it was a better workflow for integrating Yubi slowly for everybody - users that don't have a yubkikey won't see the new field on the login form and the ones that get switched over will see the new form after the normal login process.
+
+## Readme continued...
 
 This extension to Devise adds a modified Database Authentication strategy to allow the authentication of a user with Two Factor Authentication provided by the Yubikey OTP token
 
@@ -8,7 +16,7 @@ This extension requires the used to already have a valid account and password an
 
 ## Installation
 
-This plugin requires Rails 3.0.x, 3.1.x and 3.2.x and Devise 2.2.3+. Additionally the Yubikey Ruby library found here is required.
+This plugin requires Rails 4.x, 3.0.x, 3.1.x and 3.2.x and Devise 2.2.3+. Additionally the Yubikey Ruby library found here is required.
 
 <https://github.com/titanous/yubikey>
                                                  
@@ -40,7 +48,7 @@ then finally add to the model:
 
       devise :yubikey_database_authenticatable, :trackable, :timeoutable
 
-      # Setup accessible (or protected) attributes for your model
+      # Setup accessible (or protected) attributes for your model if using rails 3 or lower
       attr_accessible :use_yubikey, :registered_yubikey, :yubiotp
 
 	  attr_accessor :yubiotp
@@ -52,6 +60,17 @@ then finally add to the model:
       ...
 	end
 
+If using rails 4, the params are controlled by strong params and need to be updated in your application_controller.rb. The following settings reflect a devise config allowing username or email and password or yubikey
+
+  	before_filter :configure_permitted_parameters, if: :devise_controller?
+
+  	protected
+    	def configure_permitted_parameters
+      	  devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation) }
+      	  devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :email, :password, :login, :use_yubikey, :registered_yubikey, :yubiotp) }
+      	  devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
+    	end
+	
 ## Copyright
 
 Copyright (c) 2011-2013 Stephen Kapp, Released under MIT License 
