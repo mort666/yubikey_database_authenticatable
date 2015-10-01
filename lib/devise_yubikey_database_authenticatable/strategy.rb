@@ -6,31 +6,37 @@ module Devise
       def authenticate!
         resource = mapping.to.find_for_yubikey_database_authentication(authentication_hash)
         return fail(:not_found_in_database) unless resource
-
-        if validate(resource) 
-          if resource.use_yubikey?
-            if params[scope][:yubiotp].blank?
-              if resource.valid_password?(password) 
-                success!(resource)
-              else
-                fail(:invalid)
-              end
-            else
-              if resource.validate_yubikey(params[scope][:yubiotp]) && (resource.registered_yubikey == params[scope][:yubiotp][0..11])
-                resource.after_database_authentication
-                success!(resource)
-              else
-                fail('Invalid Yubikey OTP.')
-              end
-            end
-          elsif resource.valid_password?(password)
-            success!(resource)
+        
+        valid_password, valid_yubikey = valid_password?(resource), valid_yubikey?(resource)
+        
+        if validate(resource) { valid_password and valid_yubikey }
+          remember_me(resource)
+          resource.after_database_authentication
+          success!(resource)
+        end
+        
+        # failure modes
+        if not valid_password
+          fail(:invalid)
+        elsif not valid_yubikey
+          if params[scope][:yubiotp].blank?
+            fail('Yubikey OTP Required for this user.')
           else
-            fail(:invalid)
+            fail('Invalid Yubikey OTP.')
           end
         else
-          fail(:invalid)
+          false # reason lies elsewhere, continue to run
         end
+      end
+      
+      protected
+      def valid_yubikey?(resource)
+        !resource.use_yubikey? or
+          resource.validate_yubikey(params[scope][:yubiotp]) && (resource.registered_yubikey == params[scope][:yubiotp][0..11])
+      end
+      
+      def valid_password?(resource)
+        resource.valid_password?(password)
       end
     end
   end
