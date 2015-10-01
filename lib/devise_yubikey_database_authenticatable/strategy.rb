@@ -7,21 +7,15 @@ module Devise
         resource = mapping.to.find_for_yubikey_database_authentication(authentication_hash)
         return fail(:not_found_in_database) unless resource
 
-        if validate(resource) 
+        if validate(resource)
           if resource.use_yubikey?
-            if params[scope][:yubiotp].blank?
-              if resource.valid_password?(password) 
-                success!(resource)
-              else
-                fail(:invalid)
-              end
+            return fail('Yubikey OTP Required for this user.') if params[scope][:yubiotp].blank?
+            
+            if resource.validate_yubikey(params[scope][:yubiotp]) && (resource.registered_yubikey == params[scope][:yubiotp][0..11])
+              resource.after_database_authentication
+              success!(resource)
             else
-              if resource.validate_yubikey(params[scope][:yubiotp]) && (resource.registered_yubikey == params[scope][:yubiotp][0..11])
-                resource.after_database_authentication
-                success!(resource)
-              else
-                fail('Invalid Yubikey OTP.')
-              end
+              fail('Invalid Yubikey OTP.')
             end
           elsif resource.valid_password?(password)
             success!(resource)
