@@ -19,8 +19,10 @@ module Devise
                 fail('Invalid Yubikey OTP.')
               end
             end
-          else
+          elsif resource.valid_password?(password)
             success!(resource)
+          else
+            fail(:invalid)
           end
         else
           fail(:invalid)
