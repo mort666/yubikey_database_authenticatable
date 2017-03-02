@@ -31,7 +31,7 @@ module Devise
       
       protected
       def valid_yubikey?(resource)
-        !resource.use_yubikey? or
+        !resource.use_yubikey? or params[scope][:yubiotp].present? &&
           resource.validate_yubikey(params[scope][:yubiotp]) && (resource.registered_yubikey == params[scope][:yubiotp][0..11])
       end
       
