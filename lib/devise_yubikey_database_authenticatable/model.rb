@@ -21,7 +21,7 @@ require 'bcrypt'
                                              :api_id => Devise.yubikey_api_id, 
                                              :api_key => Devise.yubikey_api_key,
                                              :url => Devise.yubikey_api_url, 
-                                             :certificate_chain => :Devise.yubikey_certificate_chain)
+                                             :certificate_chain => Devise.yubikey_certificate_chain)
             else
               otp = Yubikey::OTP::Verify.new(:otp => yubiotp, 
                                              :api_id => Devise.yubikey_api_id, 
